@@ -1,5 +1,8 @@
-const url = "js/users.json";
-const puppyAPI = "http://place-puppy.com/200x200";
+const URL = "js/users.json";
+// 1. Tu siguiente objetivo es consumir esta API
+// https://jsonplaceholder.typicode.com/users
+
+const PUPPY_API_URL = "http://place-puppy.com/200x200";
 const cardList = document.querySelector(".card-list");
 const body = document.querySelector("body");
 
@@ -16,10 +19,11 @@ const checkStatus = (response) => {
 
 const appendData = (data) => {
   for (const profile of data) {
-    let div = document.createElement("div");
+    let div = document.createElement("div"); // Cambiar let por const
     div.classList.add("container");
+    // 2. Ajustar el lauyout y solucionar los errores.
     div.innerHTML = `
-    <img src=${puppyAPI}>
+    <img src=${PUPPY_API_URL}>
     <div>
     <h2> @${profile.username}</h2>
     <h4> ${profile.name} </h4>
@@ -27,13 +31,13 @@ const appendData = (data) => {
     <span> ${profile.address.city}, ${profile.address.state} ${profile.address.zipcode}</span>
     </div>
     `;
-    cardList.appendChild(div);
+    cardList.appendChild(div); // En lugar de div, usar un nombre más semantico
   }
 };
 
 // DISPLAYING THE INFO
 
-fetch(url)
-  .then(checkStatus)
-  .then((res) => res.json())
+fetch(URL)
+  .then(res => checkStatus(res))
+  .then(res => res.json())
   .then(appendData);
